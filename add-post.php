@@ -9,7 +9,8 @@ session_start();
 $result = mysqli_query($conn,$query);
 $data = mysqli_fetch_assoc($result);
 
-
+$categoryQuery = "SELECT *FROM category";
+$categoryResult = mysqli_query($conn,$categoryQuery);
 
 ?>
 
@@ -25,7 +26,34 @@ $data = mysqli_fetch_assoc($result);
   <div class="row">
   <?php include('include/left-nav.php');?>
       <div class="col-8">
-        this is col-8
+        <form method="POST"action="#">
+         <div class="mb-3">
+           <label for="" class="form-label">Title</label>
+           <input type="text" class="form-control" name="title">
+         </div>
+
+         <div class="mb-3">
+           <label for="" class="form-label"></label>
+           <textarea class="form-control" name="content"></textarea>
+         </div>
+
+         <div class="mb-3">
+           <label for="" class="form-label">Cover Image</label>
+            <input type="file" name="image">
+         </div>
+          
+         <div class="mb-3">
+           <label for="" class="form-label">Category</label>
+           <select class="form-control" name="category">
+             <?php while($row=mysqli_fetch_assoc($categoryResult)){ ?>
+              <option value="<?php echo $row['id'];?>">
+              <?php echo $row['title']; ?></option>
+             <?php } ?>
+           </select>
+         </div>
+         <hr/>
+         <button type="submit" class="btn btn-success">Save</button>
+        </form>
       </div>
     </div>
   </div>
